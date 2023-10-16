@@ -4,16 +4,7 @@ import ChatWindow from "./ChatWindow";
 import MessageInput from "./MessageInput";
 
 const ChatScreen = ({ userInfo }) => {
-  const mess = [
-    { user: "hemanth", message: "joined" },
-    { user: "lattu", message: "shoonu ka islami ka matabiii" },
-    {
-      user: "hemanth",
-      message:
-        "shoonu ka islami ka matabiii shoonu ka islami ka matabiii shoonu ka islami ka matabiii",
-    },
-  ];
-  const [messages, setMessages] = useState(mess);
+  const [messages, setMessages] = useState([]);
 
   const handleSendMessage = (message) => {
     setMessages([...messages, message]);
