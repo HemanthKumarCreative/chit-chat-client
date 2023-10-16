@@ -5,7 +5,7 @@ function SignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    mobile: "",
     password: "",
   });
 
@@ -68,8 +68,8 @@ function SignUpForm() {
         <input
           type="tel"
           id="phone"
-          name="phone"
-          value={formData.phone}
+          name="mobile"
+          value={formData.mobile}
           onChange={handleChange}
           required
         />
