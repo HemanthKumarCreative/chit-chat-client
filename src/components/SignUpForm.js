@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import axios from "axios";
+import Cookies from "js-cookie";
 function SignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,10 +17,25 @@ function SignUpForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Add your form submission logic here
-    console.log("Form submitted:", formData);
+    try {
+      const response = await axios.post("http://localhost:5000/api/signup", {
+        ...formData,
+      });
+      if (response.statusText === "Created") {
+        const data = await response.data;
+        Cookies.set("userInfo", JSON.stringify(data.user));
+        Cookies.set("token", data.token);
+        window.location.reload(true);
+      } else {
+        const errorData = await response.data;
+        console.error("Error:", errorData.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
