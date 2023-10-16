@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ChatScreen from "../components/ChatScreen";
 
-axios.defaults.headers.common["Authorization"] = Cookies.get("token");
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export default function CustomizedAccordions() {
