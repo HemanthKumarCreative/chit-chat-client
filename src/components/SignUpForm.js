@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 function SignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -8,6 +10,8 @@ function SignUpForm() {
     mobile: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +32,7 @@ function SignUpForm() {
         const data = await response.data;
         Cookies.set("userInfo", JSON.stringify(data.user));
         Cookies.set("token", data.token);
+        navigate("/Home");
         window.location.reload(true);
       } else {
         const errorData = await response.data;

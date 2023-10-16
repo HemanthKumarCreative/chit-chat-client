@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +29,7 @@ const Login = () => {
 
         Cookies.set("userInfo", JSON.stringify(data.user));
         Cookies.set("token", data.token);
+        navigate("/Home");
         window.location.reload(true);
       } else {
         const errorData = await response.data;
