@@ -3,9 +3,11 @@ import { Container, Grid } from "@mui/material";
 import ChatWindow from "./ChatWindow";
 import MessageInput from "./MessageInput";
 import axios from "axios";
+import Cookies from "js-cookie";
 
-const ChatScreen = ({ userInfo }) => {
+const ChatScreen = ({ groupInfo, groupId }) => {
   const [messages, setMessages] = useState([]);
+  const userInfo = JSON.parse(Cookies.get("userInfo"));
 
   const handleSendMessage = (message) => {
     setMessages([...messages, message]);
@@ -13,7 +15,9 @@ const ChatScreen = ({ userInfo }) => {
 
   const fetchAllchats = async () => {
     try {
-      const response = await axios("http://localhost:5000/api/chats");
+      const response = await axios(
+        `http://localhost:5000/api/chats/${groupId}`
+      );
       console.log(response);
       if (response.status === 200) {
         setMessages(response.data);
@@ -26,7 +30,7 @@ const ChatScreen = ({ userInfo }) => {
   };
 
   useEffect(() => {
-    setInterval(() => fetchAllchats(), 1000);
+    fetchAllchats();
   }, []);
   return (
     <Container maxWidth="lg" style={{ paddingTop: "16px" }}>
@@ -39,6 +43,8 @@ const ChatScreen = ({ userInfo }) => {
             onSendMessage={handleSendMessage}
             userInfo={userInfo}
             fetchAllchats={fetchAllchats}
+            groupInfo={groupInfo}
+            groupId={groupId}
           />
         </Grid>
       </Grid>

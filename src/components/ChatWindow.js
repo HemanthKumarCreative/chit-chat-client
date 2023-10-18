@@ -6,8 +6,8 @@ const ChatWindow = ({ messages }) => {
     <Paper
       elevation={3}
       style={{
-        minHeight: "65vh",
-        maxHeight: "65vh",
+        minHeight: "60vh",
+        maxHeight: "60vh",
         overflowY: "auto",
         padding: "16px",
       }}

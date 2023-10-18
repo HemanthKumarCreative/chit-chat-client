@@ -3,7 +3,13 @@ import { TextField, IconButton, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 
-const MessageInput = ({ onSendMessage, userInfo, fetchAllchats }) => {
+const MessageInput = ({
+  onSendMessage,
+  userInfo,
+  fetchAllchats,
+  groupInfo,
+  groupId,
+}) => {
   const [messageObj, setMessage] = useState({});
 
   const handleSend = async () => {
@@ -11,9 +17,12 @@ const MessageInput = ({ onSendMessage, userInfo, fetchAllchats }) => {
       messageObj.user = userInfo.name;
       onSendMessage(messageObj);
       try {
-        const response = await axios.post("http://localhost:5000/api/chats", {
-          ...messageObj,
-        });
+        const response = await axios.post(
+          `http://localhost:5000/api/chats/${groupId}`,
+          {
+            ...messageObj,
+          }
+        );
         console.log(response);
         fetchAllchats();
       } catch (err) {
@@ -37,7 +46,7 @@ const MessageInput = ({ onSendMessage, userInfo, fetchAllchats }) => {
         />
       </Grid>
       <Grid item xs={2}>
-        <IconButton onClick={handleSend}>
+        <IconButton onClick={() => handleSend()}>
           <SendIcon />
         </IconButton>
       </Grid>

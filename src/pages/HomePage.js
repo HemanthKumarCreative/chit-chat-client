@@ -17,8 +17,11 @@ export default function CustomizedAccordions() {
   const navigate = useNavigate();
   const fetchGroups = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/groups");
-      setGroups(response.data);
+      const response = await axios.get(
+        `http://localhost:5000/api/groups/u/${userInfo?.id}`
+      );
+      setGroups(response?.data);
+      console.log({ hello: response.data });
     } catch (err) {
       console.error(err);
     }
@@ -38,10 +41,14 @@ export default function CustomizedAccordions() {
   const handleCreateGroup = async (groupName) => {
     // Implement the logic to create the group here
     try {
-      const response = await axios.post("http://localhost:5000/api/groups", {
-        name: groupName,
-        members: [],
-      });
+      const response = await axios.post(
+        `http://localhost:5000/api/groups/u/${userInfo.id}`,
+        {
+          name: groupName,
+          members: [userInfo.id],
+          admins: [userInfo.id],
+        }
+      );
       console.log(response);
       fetchGroups();
     } catch (err) {
@@ -56,6 +63,10 @@ export default function CustomizedAccordions() {
     navigate("/");
   };
 
+  const showInvitations = async () => {
+    navigate("/Invitations");
+  };
+
   return (
     <div>
       <AppBar position="fixed">
@@ -63,6 +74,9 @@ export default function CustomizedAccordions() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {`Welcome ${userInfo.name}`}
           </Typography>
+          <Button variant="contained" color="primary" onClick={showInvitations}>
+            Group Invitations
+          </Button>
           <Button variant="contained" color="primary" onClick={handleOpenModal}>
             Create Group
           </Button>
@@ -77,7 +91,11 @@ export default function CustomizedAccordions() {
         </Toolbar>
       </AppBar>
       <Container sx={{ marginTop: 14 }}>
-        <GroupsListingTable groups={groups} />
+        <GroupsListingTable
+          groups={groups}
+          fetchGroups={fetchGroups}
+          userId={userInfo.id}
+        />
       </Container>
     </div>
   );
