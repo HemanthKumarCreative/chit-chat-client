@@ -1,10 +1,10 @@
-import InvitationList from "../components/InvitationList";
 import React from "react";
 import { Container } from "@mui/material";
 import Header from "../components/Header";
 import GroupsList from "../components/GroupsList";
+import CreateNewGroup from "../components/CreateNewGroup";
 
-function ShowInvitationsPage() {
+function CreateNewGroupPage() {
   return (
     <div>
       <Header />
@@ -17,10 +17,10 @@ function ShowInvitationsPage() {
           backgroundColor: "#d7d4ec66",
         }}
       >
-        <InvitationList />
+        <CreateNewGroup />
       </Container>
     </div>
   );
 }
 
-export default ShowInvitationsPage;
+export default CreateNewGroupPage;

@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    password: "",
+    userName: "",
+    userEmail: "",
+    userMobile: "",
+    userPassword: "",
   });
 
   const navigate = useNavigate();
@@ -47,23 +47,23 @@ function SignUpForm() {
     <div className="signup-container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="userName">Name:</label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+          id="userName"
+          name="userName"
+          value={formData.userName}
           onChange={handleChange}
           required
         />
         <br />
 
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="userEmail">Email:</label>
         <input
           type="email"
-          id="email"
-          name="email"
-          value={formData.email}
+          id="userEmail"
+          name="userEmail"
+          value={formData.userEmail}
           onChange={handleChange}
           required
         />
@@ -73,19 +73,19 @@ function SignUpForm() {
         <input
           type="tel"
           id="phone"
-          name="mobile"
-          value={formData.mobile}
+          name="userMobile"
+          value={formData.userMobile}
           onChange={handleChange}
           required
         />
         <br />
 
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="userPassword">Password:</label>
         <input
           type="password"
-          id="password"
-          name="password"
-          value={formData.password}
+          id="userPassword"
+          name="userPassword"
+          value={formData.userPassword}
           onChange={handleChange}
           required
         />

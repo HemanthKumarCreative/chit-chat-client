@@ -3,11 +3,11 @@ import GroupsList from "../components/GroupsList";
 import Header from "../components/Header";
 import Cookies from "js-cookie";
 import { Container } from "@mui/material";
-import ChatWindow from "../components/ChatWindow";
+import InvitationList from "../components/InvitationList";
 import axios from "axios";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export default function ChatDetailedPage() {
+export default function InvitationsPage() {
   const userData = JSON.parse(Cookies.get("userInfo"));
   const [userInfo, setUserInfo] = useState(userData);
   console.log(userInfo);
@@ -19,11 +19,11 @@ export default function ChatDetailedPage() {
         sx={{
           marginLeft: "27vw",
           width: "73vw",
-          height: "90vh",
+          height: "91vh",
           backgroundColor: "#d7d4ec66",
         }}
       >
-        <ChatWindow />
+        <InvitationList />
       </Container>
     </div>
   );

@@ -5,11 +5,17 @@ import MessageInput from "./MessageInput";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+import io from "socket.io-client";
+
+// const socket = io("http://localhost:5000/api/chats");
+
 const ChatScreen = ({ groupInfo, groupId }) => {
   const [messages, setMessages] = useState([]);
   const userInfo = JSON.parse(Cookies.get("userInfo"));
 
   const handleSendMessage = (message) => {
+    // socket.emit("message", message);
+
     setMessages([...messages, message]);
   };
 

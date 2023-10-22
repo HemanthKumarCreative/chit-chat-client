@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    userEmail: "",
+    userPassword: "",
   });
 
   const navigate = useNavigate();
@@ -48,8 +48,8 @@ const Login = () => {
         variant="outlined"
         label="Email"
         type="email"
-        name="email"
-        value={formData.email}
+        name="userEmail"
+        value={formData.userEmail}
         onChange={handleChange}
       />
       <TextField
@@ -58,8 +58,8 @@ const Login = () => {
         variant="outlined"
         label="Password"
         type="password"
-        name="password"
-        value={formData.password}
+        name="userPassword"
+        value={formData.userPassword}
         onChange={handleChange}
       />
       <Button variant="contained" color="primary" type="submit">
