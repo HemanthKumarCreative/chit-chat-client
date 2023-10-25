@@ -12,6 +12,7 @@ export default function ChatDetailedPage({
   setGroups,
   userId,
   userName,
+  socket,
 }) {
   let { groupId } = useParams();
   return (
@@ -26,7 +27,12 @@ export default function ChatDetailedPage({
           backgroundColor: "#d7d4ec66",
         }}
       >
-        <ChatScreen userId={userId} groupId={groupId} userName={userName} />
+        <ChatScreen
+          userId={userId}
+          groupId={groupId}
+          userName={userName}
+          socket={socket}
+        />
       </Container>
     </div>
   );

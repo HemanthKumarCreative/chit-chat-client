@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Grid, Typography, Box } from "@mui/material";
 import InvitationCard from "./InvitationCard";
 
-function InvitationList({ invitations, fetchInvitations, userName }) {
+function InvitationList({ invitations, fetchInvitations, userName, socket }) {
   return (
     <Container sx={{ marginTop: 1 }}>
       <Typography
@@ -31,6 +31,7 @@ function InvitationList({ invitations, fetchInvitations, userName }) {
                   userId={invitation.recieverId}
                   groupId={invitation.groupId}
                   userName={userName}
+                  socket={socket}
                 />
               </Grid>
             ))}

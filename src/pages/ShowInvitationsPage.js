@@ -6,7 +6,13 @@ import GroupsList from "../components/GroupsList";
 import content from "../assets/content.json";
 import axios from "axios";
 
-function ShowInvitationsPage({ groups, setGroups, recieverId, userName }) {
+function ShowInvitationsPage({
+  groups,
+  setGroups,
+  recieverId,
+  userName,
+  socket,
+}) {
   const [invitations, setInvitations] = useState([]);
   const { URL } = content;
 
@@ -42,6 +48,7 @@ function ShowInvitationsPage({ groups, setGroups, recieverId, userName }) {
           invitations={invitations}
           fetchInvitations={fetchInvitations}
           userName={userName}
+          socket={socket}
         />
       </Container>
     </div>

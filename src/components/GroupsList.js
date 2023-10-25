@@ -54,7 +54,7 @@ const GroupsList = ({ groups, setGroups, userId }) => {
             color="success"
           >
             <ListItemText
-              primary="Chit Chat"
+              primary="Chit Chat Groups"
               sx={{
                 maxWidth: "20rem",
                 overflowWrap: "break-word",

@@ -4,15 +4,34 @@ import ChatWindow from "./ChatWindow";
 import MessageInput from "./MessageInput";
 import axios from "axios";
 import content from "../assets/content.json";
+import io from "socket.io-client";
 
 const ChatScreen = ({ userId, groupId, userName }) => {
   const [messages, setMessages] = useState([]);
   const { URL } = content;
   const [groupInfo, setGroupInfo] = useState({});
+  const [socket, setSocket] = useState(null);
 
   const handleSendMessage = (message) => {
     setMessages([...messages, message]);
+    socket.emit("message", message);
   };
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:5000");
+    newSocket.on("connect", () => {
+      console.log("Connected to server");
+      setSocket(newSocket);
+    });
+
+    newSocket.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchGroupInfo = async () => {
