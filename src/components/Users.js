@@ -88,7 +88,6 @@ const UserListModal = ({
       <TableHead>
         <TableRow>
           <TableCell>User Name</TableCell>
-          <TableCell>Actions</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -106,7 +105,7 @@ const UserListModal = ({
       <TableHead>
         <TableRow>
           <TableCell>User Name</TableCell>
-          <TableCell>Actions</TableCell>
+          {admins?.includes(senderId) && <TableCell>Actions</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -114,20 +113,24 @@ const UserListModal = ({
           <TableRow key={member.userId}>
             <TableCell>{member.userName}</TableCell>
             <TableCell>
-              <IconButton
-                aria-label="people"
-                color="success"
-                onClick={() => handleMakeAdmin(member.userId)}
-              >
-                <GroupRemoveIcon />
-              </IconButton>
-              <IconButton
-                aria-label="people"
-                color="success"
-                onClick={() => handleMakeAdmin(member.userId)}
-              >
-                <GroupAddIcon />
-              </IconButton>
+              {admins?.includes(senderId) && (
+                <IconButton
+                  aria-label="people"
+                  color="success"
+                  onClick={() => handleMakeAdmin(member.userId)}
+                >
+                  <GroupRemoveIcon />
+                </IconButton>
+              )}
+              {admins?.includes(senderId) && (
+                <IconButton
+                  aria-label="people"
+                  color="success"
+                  onClick={() => handleMakeAdmin(member.userId)}
+                >
+                  <GroupAddIcon />
+                </IconButton>
+              )}
             </TableCell>
           </TableRow>
         ))}
@@ -175,14 +178,14 @@ const UserListModal = ({
         <Tabs value={selectedTab} onChange={handleChangeTab}>
           <Tab label="Admins" />
           <Tab label="Members" />
-          <Tab label="Invite Users" />
+          {admins?.includes(senderId) && <Tab label="Invite Users" />}
         </Tabs>
         <TableContainer sx={{ height: "70vh", width: "50vw" }}>
           {selectedTab === 0
             ? adminsTable()
             : selectedTab === 1
             ? membersTable()
-            : usersTable()}
+            : admins?.includes(senderId) && usersTable()}
         </TableContainer>
       </DialogContent>
     </Dialog>

@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import InviteMembersModal from "./InviteMembers";
 import ViewMembersModal from "./ViewMembers";
-
 import axios from "axios";
 
 const GroupsListingTable = ({ groups, fetchGroups, userId }) => {
