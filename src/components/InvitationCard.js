@@ -10,6 +10,7 @@ const InvitationCard = ({
   userId,
   groupId,
   userName,
+  setGroups,
 }) => {
   const { URL } = content;
 
@@ -58,6 +59,19 @@ const InvitationCard = ({
     }
   };
 
+  const fetchGroups = async () => {
+    try {
+      const response = await axios.get(`${URL}/api/groups/u/${userId}`);
+      if (response?.statusText === "OK") {
+        const groups = await response.data;
+        console.log({ groups });
+        setGroups(groups);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleAccept = async () => {
     try {
       const response = await axios.put(
@@ -67,10 +81,11 @@ const InvitationCard = ({
       if (response.statusText === "OK") {
         const invitationStatus = response.data;
         console.log(invitationStatus);
-        fetchInvitations();
-        updateGroupMembers();
-        updateUserGroups();
-        updateJoiningMessage();
+        await fetchInvitations();
+        await updateGroupMembers();
+        await updateUserGroups();
+        await updateJoiningMessage();
+        await fetchGroups();
       }
     } catch (error) {
       console.log(error);

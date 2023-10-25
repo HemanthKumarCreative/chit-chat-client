@@ -49,6 +49,7 @@ function ShowInvitationsPage({
           fetchInvitations={fetchInvitations}
           userName={userName}
           socket={socket}
+          setGroups={setGroups}
         />
       </Container>
     </div>
