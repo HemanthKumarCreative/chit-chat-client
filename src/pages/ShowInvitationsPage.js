@@ -28,7 +28,7 @@ function ShowInvitationsPage({ groups, setGroups, recieverId, userName }) {
 
   return (
     <div>
-      <Header />
+      <Header userName={userName} />
       <GroupsList userId={recieverId} groups={groups} setGroups={setGroups} />
       <Container
         sx={{

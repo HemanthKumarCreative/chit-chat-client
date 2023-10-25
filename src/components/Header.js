@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ userName }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -28,6 +28,9 @@ const Header = () => {
       >
         <Typography variant="h6" component="div">
           CHIT CHAT
+        </Typography>
+        <Typography variant="h6" component="div" color="green">
+          {`Welcome, ${userName}`}
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
           <Button color="success" variant="outlined" onClick={createNewGroup}>

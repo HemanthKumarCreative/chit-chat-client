@@ -8,7 +8,7 @@ import BannerCard from "../components/BannerCard";
 import axios from "axios";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export default function HomePage({ groups, setGroups, userId }) {
+export default function HomePage({ groups, setGroups, userId, userName }) {
   const messages = {
     detailedGroup:
       "Click on the group name visible on the side panel, to enter the group's detailed page",
@@ -16,7 +16,7 @@ export default function HomePage({ groups, setGroups, userId }) {
   };
   return (
     <div>
-      <Header />
+      <Header userName={userName} />
       <GroupsList userId={userId} groups={groups} setGroups={setGroups} />
       <Container
         sx={{

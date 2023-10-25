@@ -28,6 +28,7 @@ const App = () => {
               groups={groups}
               setGroups={setGroups}
               userId={userData.userId}
+              userName={userData.userName}
             />
           }
         />
@@ -38,6 +39,7 @@ const App = () => {
               groups={groups}
               setGroups={setGroups}
               userId={userData.userId}
+              userName={userData.userName}
             />
           }
         />

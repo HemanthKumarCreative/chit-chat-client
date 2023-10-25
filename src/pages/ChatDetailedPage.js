@@ -16,7 +16,7 @@ export default function ChatDetailedPage({
   let { groupId } = useParams();
   return (
     <div>
-      <Header />
+      <Header userName={userName} />
       <GroupsList userId={userId} groups={groups} setGroups={setGroups} />
       <Container
         sx={{
