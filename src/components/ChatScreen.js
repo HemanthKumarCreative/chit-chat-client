@@ -6,7 +6,7 @@ import axios from "axios";
 import content from "../assets/content.json";
 import io from "socket.io-client";
 
-const ChatScreen = ({ userId, groupId, userName }) => {
+const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
   const [messages, setMessages] = useState([]);
   const { URL } = content;
   const [groupInfo, setGroupInfo] = useState({});
@@ -75,6 +75,8 @@ const ChatScreen = ({ userId, groupId, userName }) => {
             userId={userId}
             groupId={groupId}
             groupInfo={groupInfo}
+            setGroupInfo={setGroupInfo}
+            setGroups={setGroups}
           />
         </Grid>
         <Grid item xs={12} md={12}>

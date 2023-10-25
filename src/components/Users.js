@@ -26,6 +26,8 @@ const UserListModal = ({
   groupName,
   groupId,
   senderId,
+  setGroupInfo,
+  setGroups,
 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [users, setUsers] = useState([]);
@@ -33,13 +35,39 @@ const UserListModal = ({
   const [adminsInfo, setAdminsInfo] = useState([]);
   const [membersInfo, setMembersInfo] = useState([]);
 
+  const fetchGroupInfo = async () => {
+    if (groupId !== undefined) {
+      try {
+        const response = await axios.get(`${URL}/api/groups/g/${groupId}`);
+        if (response.statusText === "OK") {
+          const groupInfo = await response.data;
+          setGroupInfo(groupInfo);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const handleChangeTab = (event, tabIndex) => {
     setSelectedTab(tabIndex);
   };
 
-  const handleMakeAdmin = (userId) => {
-    // Implement the logic to make the user an admin
-    console.log(`Making user with ID ${userId} an admin`);
+  const handleMakeAdmin = async (userId) => {};
+
+  const handleRemoveUser = async (userId) => {
+    try {
+      const response = await axios.put(`${URL}/api/groups/r/g/${groupId}`, {
+        userId,
+      });
+      if (response.statusText === "OK") {
+        const userRemovedStatus = await response.data;
+        console.log(userRemovedStatus);
+        await fetchGroupInfo();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInviteUser = async (recieverId) => {
@@ -117,7 +145,7 @@ const UserListModal = ({
                 <IconButton
                   aria-label="people"
                   color="success"
-                  onClick={() => handleMakeAdmin(member.userId)}
+                  onClick={() => handleRemoveUser(member.userId)}
                 >
                   <GroupRemoveIcon />
                 </IconButton>

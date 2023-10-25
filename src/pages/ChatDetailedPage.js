@@ -32,6 +32,7 @@ export default function ChatDetailedPage({
           groupId={groupId}
           userName={userName}
           socket={socket}
+          setGroups={setGroups}
         />
       </Container>
     </div>

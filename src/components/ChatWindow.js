@@ -11,7 +11,13 @@ import IconButton from "@mui/material/IconButton";
 import GroupsIcon from "@mui/icons-material/Groups";
 import UserListModal from "./Users";
 
-const ChatWindow = ({ messages, userId, groupInfo }) => {
+const ChatWindow = ({
+  messages,
+  userId,
+  groupInfo,
+  setGroupInfo,
+  setGroups,
+}) => {
   const [openModal, setOpenModal] = useState(false);
   const { groupMembers, groupAdmins, groupName, groupId } = groupInfo;
 
@@ -64,6 +70,8 @@ const ChatWindow = ({ messages, userId, groupInfo }) => {
             groupName={groupName}
             groupId={groupId}
             senderId={userId}
+            setGroupInfo={setGroupInfo}
+            setGroups={setGroups}
           />
         </Box>
       </Box>
