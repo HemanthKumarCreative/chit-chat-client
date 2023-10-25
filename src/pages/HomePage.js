@@ -1,36 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import GroupsList from "../components/GroupsList";
 import Header from "../components/Header";
-import Cookies from "js-cookie";
-import {
-  Button,
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Grid,
-  Box,
-} from "@mui/material";
+
+import { Typography, Container, Grid, Box } from "@mui/material";
 import BannerCard from "../components/BannerCard";
 
 import axios from "axios";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export default function HomePage() {
-  const userData = JSON.parse(Cookies.get("userInfo"));
-  const [userInfo, setUserInfo] = useState(userData);
-  const message =
-    "click on the group name visible on the side panel, to enter the group's detailed page";
+export default function HomePage({ groups, setGroups, userId }) {
   const messages = {
     detailedGroup:
       "Click on the group name visible on the side panel, to enter the group's detailed page",
     encryptNote: "The Information was end to end encrypted",
   };
-  console.log(userInfo);
   return (
     <div>
       <Header />
-      <GroupsList />
+      <GroupsList userId={userId} groups={groups} setGroups={setGroups} />
       <Container
         sx={{
           marginLeft: "27vw",
@@ -44,7 +31,11 @@ export default function HomePage() {
             variant="h5"
             align="center"
             gutterBottom
-            sx={{ backgroundColor: "whitesmoke", padding: "1rem" }}
+            sx={{
+              backgroundColor: "whitesmoke",
+              padding: "1rem",
+              color: "#4caf50",
+            }}
           >
             Important Notes
           </Typography>

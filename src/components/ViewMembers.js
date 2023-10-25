@@ -11,7 +11,6 @@ import {
   Button,
 } from "@mui/material";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const ViewMembersModal = ({ open, handleClose, handleView, groupInfo }) => {
   const { members, admins } = groupInfo;
@@ -59,7 +58,7 @@ const ViewMembersModal = ({ open, handleClose, handleView, groupInfo }) => {
                   <TableCell>
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="success"
                       onClick={() =>
                         handleView(user.id, groupInfo.id, user.name)
                       }

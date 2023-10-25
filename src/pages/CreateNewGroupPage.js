@@ -4,11 +4,11 @@ import Header from "../components/Header";
 import GroupsList from "../components/GroupsList";
 import CreateNewGroup from "../components/CreateNewGroup";
 
-function CreateNewGroupPage() {
+function CreateNewGroupPage({ groups, setGroups, userId }) {
   return (
     <div>
       <Header />
-      <GroupsList />
+      <GroupsList userId={userId} groups={groups} setGroups={setGroups} />
       <Container
         sx={{
           marginLeft: "27vw",
@@ -17,7 +17,7 @@ function CreateNewGroupPage() {
           backgroundColor: "#d7d4ec66",
         }}
       >
-        <CreateNewGroup />
+        <CreateNewGroup userId={userId} setGroups={setGroups} groups={groups} />
       </Container>
     </div>
   );

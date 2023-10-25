@@ -3,52 +3,66 @@ import { Container, Grid } from "@mui/material";
 import ChatWindow from "./ChatWindow";
 import MessageInput from "./MessageInput";
 import axios from "axios";
-import Cookies from "js-cookie";
+import content from "../assets/content.json";
 
-import io from "socket.io-client";
-
-// const socket = io("http://localhost:5000/api/chats");
-
-const ChatScreen = ({ groupInfo, groupId }) => {
+const ChatScreen = ({ userId, groupId, userName }) => {
   const [messages, setMessages] = useState([]);
-  const userInfo = JSON.parse(Cookies.get("userInfo"));
+  const { URL } = content;
+  const [groupInfo, setGroupInfo] = useState({});
 
   const handleSendMessage = (message) => {
-    // socket.emit("message", message);
-
     setMessages([...messages, message]);
   };
 
-  const fetchAllchats = async () => {
-    try {
-      const response = await axios(
-        `http://localhost:5000/api/chats/${groupId}`
-      );
-      console.log(response);
-      if (response.status === 200) {
-        setMessages(response.data);
-      } else {
-        console.error("Internal Server Error");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
+    const fetchGroupInfo = async () => {
+      if (groupId !== undefined) {
+        try {
+          const response = await axios.get(`${URL}/api/groups/g/${groupId}`);
+          if (response.statusText === "OK") {
+            const groupInfo = await response.data;
+            setGroupInfo(groupInfo);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    const fetchAllchats = async () => {
+      try {
+        const response = await axios.get(`${URL}/api/messages/${groupId}`);
+        if (response.statusText === "OK") {
+          const { data } = response;
+          setMessages(data);
+        } else {
+          console.error("Internal Server Error");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchGroupInfo();
     fetchAllchats();
-  }, []);
+  }, [groupId, URL]);
+
   return (
     <Container maxWidth="lg" style={{ paddingTop: "16px" }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
-          <ChatWindow messages={messages} />
+          <ChatWindow
+            messages={messages}
+            userId={userId}
+            groupId={groupId}
+            groupInfo={groupInfo}
+          />
         </Grid>
         <Grid item xs={12} md={12}>
           <MessageInput
             onSendMessage={handleSendMessage}
-            userInfo={userInfo}
-            fetchAllchats={fetchAllchats}
+            userId={userId}
+            userName={userName}
             groupInfo={groupInfo}
             groupId={groupId}
           />

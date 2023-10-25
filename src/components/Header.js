@@ -30,10 +30,10 @@ const Header = () => {
           CHIT CHAT
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Button color="primary" variant="outlined" onClick={createNewGroup}>
+          <Button color="success" variant="outlined" onClick={createNewGroup}>
             Create New Group
           </Button>
-          <Button color="primary" variant="outlined" onClick={showInvitations}>
+          <Button color="success" variant="outlined" onClick={showInvitations}>
             Show Invitations
           </Button>
           <Button color="secondary" variant="outlined" onClick={handleLogout}>

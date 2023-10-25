@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Card,
@@ -7,53 +7,80 @@ import {
   Box,
   Container,
 } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import GroupsIcon from "@mui/icons-material/Groups";
+import UserListModal from "./Users";
 
-const ChatWindow = () => {
-  const messages = [
-    { text: "Hello!", sender: "me" },
-    {
-      text: "Hi there! Hi there! Hi there! Hi there! Hi there! Hi there! Hi there!",
-      sender: "other",
-    },
-    {
-      text: "How are you? How are you? How are you? How are you? How are you? How are you? How are you? How are you?",
-      sender: "me",
-    },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
-    { text: "I'm good, thanks!", sender: "other" },
+const ChatWindow = ({ messages, userId, groupInfo }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const { groupMembers, groupAdmins, groupName, groupId } = groupInfo;
 
-    // Add more messages as needed
-  ];
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Container sx={{ marginTop: 1 }}>
-      <Typography
-        variant="h5"
-        align="center"
-        gutterBottom
-        sx={{ backgroundColor: "whitesmoke", padding: "1rem" }}
+      <Box
+        sx={{
+          backgroundColor: "whitesmoke",
+          padding: "1rem",
+          color: "#4caf50",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        Group Name will come here
-      </Typography>
-      <Box sx={{ overflowY: "auto", height: "70vh" }}>
+        <Typography variant="h5" align="center" gutterBottom>
+          {groupName}
+        </Typography>
+        <Box
+          sx={{
+            backgroundColor: "#bcddd2",
+            width: "3rem",
+            padding: "0.5rem",
+            color: "#4caf50",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <IconButton
+            aria-label="people"
+            color="success"
+            onClick={handleOpenModal}
+          >
+            <GroupsIcon />
+          </IconButton>
+          <UserListModal
+            open={openModal}
+            handleClose={handleCloseModal}
+            members={groupMembers}
+            admins={groupAdmins}
+            groupName={groupName}
+            groupId={groupId}
+            senderId={userId}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ overflowY: "auto", height: "65vh" }}>
         <Grid container spacing={2}>
-          {messages.map((message, index) => (
-            <Grid item xs={12} key={index}>
+          {messages.map((messageInfo) => (
+            <Grid item xs={12} key={messageInfo.messageId}>
               <Card
                 sx={{
                   maxWidth: "40%",
-                  marginLeft: message.sender !== "other" ? "auto" : 0,
+                  marginLeft: messageInfo.senderId === userId ? "auto" : 0,
                   backgroundColor:
-                    message.sender === "other" ? "#E0E0E0" : "#DCF8C6",
+                    messageInfo.senderId !== userId ? "#E0E0E0" : "#DCF8C6",
                 }}
               >
                 <CardContent>
-                  <Typography variant="body1">{message.text}</Typography>
+                  <Typography variant="body1">{messageInfo.message}</Typography>
                 </CardContent>
               </Card>
             </Grid>

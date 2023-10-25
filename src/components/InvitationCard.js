@@ -1,13 +1,96 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
+import axios from "axios";
+import content from "../assets/content.json";
 
-const InvitationCard = ({ groupName, groupCount }) => {
-  const handleAccept = () => {
-    // Add logic for accepting group invitation
+const InvitationCard = ({
+  groupName,
+  invitationId,
+  fetchInvitations,
+  userId,
+  groupId,
+  userName,
+}) => {
+  const { URL } = content;
+
+  const updateJoiningMessage = async () => {
+    const message = {
+      groupId,
+      senderId: userId,
+      senderName: userName,
+      message: `${userName} joined the group`,
+    };
+    try {
+      const response = await axios.post(
+        `${URL}/api/messages/${groupId}`,
+        message
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleReject = () => {
-    // Add logic for rejecting group invitation
+  const updateGroupMembers = async () => {
+    try {
+      const response = await axios.put(`${URL}/api/groups/g/${groupId}`, {
+        userId,
+        role: "member",
+      });
+      console.log({ response });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserGroups = async () => {
+    try {
+      const response = await axios.put(`${URL}/api/users/update-user-groups`, {
+        userId,
+        groupId,
+      });
+      if (response?.statusText === "OK") {
+        const message = await response?.data?.message;
+        console.log({ message });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAccept = async () => {
+    try {
+      const response = await axios.put(
+        `${URL}/api/invitations/${invitationId}`,
+        { invitationStatus: "accepted" }
+      );
+      if (response.statusText === "OK") {
+        const invitationStatus = response.data;
+        console.log(invitationStatus);
+        fetchInvitations();
+        updateGroupMembers();
+        updateUserGroups();
+        updateJoiningMessage();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      const response = await axios.put(
+        `${URL}/api/invitations/${invitationId}`,
+        { invitationStatus: "rejected" }
+      );
+      if (response.statusText === "OK") {
+        const invitationStatus = response.data;
+        console.log(invitationStatus);
+        fetchInvitations();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -21,20 +104,16 @@ const InvitationCard = ({ groupName, groupCount }) => {
           color="text.secondary"
           sx={{ marginBottom: 2 }}
         >
-          Group Count: {groupCount}
+          Group Count: 10
         </Typography>
         <Grid container spacing={2}>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleAccept}>
+            <Button variant="outlined" color="success" onClick={handleAccept}>
               Accept
             </Button>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleReject}
-            >
+            <Button variant="outlined" color="secondary" onClick={handleReject}>
               Reject
             </Button>
           </Grid>

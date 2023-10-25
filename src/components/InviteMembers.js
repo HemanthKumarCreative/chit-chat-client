@@ -32,7 +32,7 @@ const InviteMembersModal = ({ open, handleClose, users, handleInvite }) => {
                   <TableCell>
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="success"
                       onClick={() => handleInvite(user.id)}
                     >
                       Invite

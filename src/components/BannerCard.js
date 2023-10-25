@@ -5,7 +5,7 @@ const BannerCard = ({ message }) => {
   return (
     <Card
       sx={{
-        border: "2px solid #1976D2", // Add border styling
+        border: "2px solid #558b2f", // Add border styling
         textAlign: "center",
       }}
     >

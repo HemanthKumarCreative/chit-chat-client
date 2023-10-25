@@ -2,33 +2,29 @@ import React, { useState } from "react";
 import { TextField, IconButton, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
+import content from "../assets/content.json";
 
-const MessageInput = ({
-  onSendMessage,
-  userInfo,
-  fetchAllchats,
-  groupInfo,
-  groupId,
-}) => {
-  const [messageObj, setMessage] = useState({});
+const MessageInput = ({ onSendMessage, userId, userName, groupId }) => {
+  const [messageInfo, setMessageInfo] = useState({});
+  const { URL } = content;
 
   const handleSend = async () => {
-    if (messageObj.message.trim() !== "") {
-      messageObj.user = userInfo.name;
-      onSendMessage(messageObj);
+    if (messageInfo.message.trim() !== "") {
+      messageInfo.senderName = userName;
+      messageInfo.senderId = userId;
+      messageInfo.groupId = groupId;
       try {
-        const response = await axios.post(
-          `http://localhost:5000/api/chats/${groupId}`,
-          {
-            ...messageObj,
-          }
-        );
-        console.log(response);
-        fetchAllchats();
+        const response = await axios.post(`${URL}/api/messages/${groupId}`, {
+          ...messageInfo,
+        });
+        if (response.statusText === "Created") {
+          const messageSent = await response.data;
+          onSendMessage(messageSent);
+          setMessageInfo({ message: "", senderName: "" });
+        }
       } catch (err) {
         console.error(err);
       }
-      setMessage({ message: "", user: "" });
     }
   };
 
@@ -38,15 +34,15 @@ const MessageInput = ({
         <TextField
           fullWidth
           variant="outlined"
-          value={messageObj.message}
+          value={messageInfo.message}
           onChange={(e) =>
-            setMessage({ ...messageObj, message: e.target.value })
+            setMessageInfo({ ...messageInfo, message: e.target.value })
           }
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
       </Grid>
       <Grid item xs={2}>
-        <IconButton onClick={() => handleSend()}>
+        <IconButton onClick={() => handleSend()} color="success">
           <SendIcon />
         </IconButton>
       </Grid>

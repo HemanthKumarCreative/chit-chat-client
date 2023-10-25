@@ -39,7 +39,7 @@ const CreateGroupModal = ({ open, handleClose, handleCreate }) => {
           onChange={handleInputChange}
           mb={2}
         />
-        <Button variant="contained" color="primary" onClick={handleCreateClick}>
+        <Button variant="contained" color="success" onClick={handleCreateClick}>
           Create
         </Button>
       </Box>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,6 @@ function SignUpForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
     try {
       const response = await axios.post("http://localhost:5000/api/signup", {
         ...formData,
@@ -44,56 +44,60 @@ function SignUpForm() {
   };
 
   return (
-    <div className="signup-container">
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="userName">Name:</label>
-        <input
-          type="text"
-          id="userName"
-          name="userName"
-          value={formData.userName}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <label htmlFor="userEmail">Email:</label>
-        <input
-          type="email"
-          id="userEmail"
-          name="userEmail"
-          value={formData.userEmail}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <label htmlFor="phone">Phone Number:</label>
-        <input
-          type="tel"
-          id="phone"
-          name="userMobile"
-          value={formData.userMobile}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <label htmlFor="userPassword">Password:</label>
-        <input
-          type="password"
-          id="userPassword"
-          name="userPassword"
-          value={formData.userPassword}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <input type="submit" value="Sign Up" />
-      </form>
-    </div>
+    <Box className="signup-container" component="form" onSubmit={handleSubmit}>
+      <TextField
+        fullWidth
+        label="Name"
+        variant="outlined"
+        name="userName"
+        value={formData.userName}
+        onChange={handleChange}
+        margin="normal"
+        required
+      />
+      <TextField
+        fullWidth
+        label="Email"
+        variant="outlined"
+        type="email"
+        name="userEmail"
+        value={formData.userEmail}
+        onChange={handleChange}
+        margin="normal"
+        required
+      />
+      <TextField
+        fullWidth
+        label="Phone Number"
+        variant="outlined"
+        type="tel"
+        name="userMobile"
+        value={formData.userMobile}
+        onChange={handleChange}
+        margin="normal"
+        required
+      />
+      <TextField
+        fullWidth
+        label="Password"
+        variant="outlined"
+        type="password"
+        name="userPassword"
+        value={formData.userPassword}
+        onChange={handleChange}
+        margin="normal"
+        required
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        size="large"
+      >
+        Sign Up
+      </Button>
+    </Box>
   );
 }
 
