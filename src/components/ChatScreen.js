@@ -11,10 +11,17 @@ const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
   const { URL } = content;
   const [groupInfo, setGroupInfo] = useState({});
   const [socket, setSocket] = useState(null);
+  const [selectedFilePath, setSelectedFilePath] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
 
   const handleSendMessage = (message) => {
     setMessages([...messages, message]);
     socket.emit("message", message);
+  };
+
+  const closePreviewHandler = () => {
+    setSelectedFile(null);
+    setSelectedFilePath(null);
   };
 
   useEffect(() => {
@@ -77,6 +84,11 @@ const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
             groupInfo={groupInfo}
             setGroupInfo={setGroupInfo}
             setGroups={setGroups}
+            selectedFilePath={selectedFilePath}
+            setSelectedFilePath={setSelectedFilePath}
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
+            closePreviewHandler={closePreviewHandler}
           />
         </Grid>
         <Grid item xs={12} md={12}>
@@ -86,6 +98,10 @@ const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
             userName={userName}
             groupInfo={groupInfo}
             groupId={groupId}
+            selectedFilePath={selectedFilePath}
+            setSelectedFilePath={setSelectedFilePath}
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
           />
         </Grid>
       </Grid>

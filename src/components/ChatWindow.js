@@ -10,6 +10,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import GroupsIcon from "@mui/icons-material/Groups";
 import UserListModal from "./Users";
+import FilePreview from "./FilePreview";
 
 function getDateFromISOString(isoString) {
   const dateObject = new Date(isoString);
@@ -39,6 +40,9 @@ const ChatWindow = ({
   groupInfo,
   setGroupInfo,
   setGroups,
+  selectedFilePath,
+  selectedFile,
+  closePreviewHandler,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const { groupMembers, groupAdmins, groupName, groupId } = groupInfo;
@@ -141,6 +145,11 @@ const ChatWindow = ({
               </Card>
             </Grid>
           ))}
+          <FilePreview
+            selectedFilePath={selectedFilePath}
+            selectedFile={selectedFile}
+            onClose={closePreviewHandler}
+          />
         </Grid>
       </Box>
     </Container>

@@ -3,10 +3,26 @@ import { TextField, IconButton, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import content from "../assets/content.json";
+import FilePicker from "./FilePicker";
+import FilePreview from "./FilePreview";
 
-const MessageInput = ({ onSendMessage, userId, userName, groupId }) => {
+const MessageInput = ({
+  onSendMessage,
+  userId,
+  userName,
+  groupId,
+  setSelectedFilePath,
+  selectedFilePath,
+  setSelectedFile,
+  selectedFile,
+}) => {
   const [messageInfo, setMessageInfo] = useState({});
   const { URL } = content;
+
+  const handleFileSelected = (filePath, file) => {
+    setSelectedFilePath(filePath);
+    setSelectedFile(file);
+  };
 
   const handleSend = async () => {
     if (messageInfo.message.trim() !== "") {
@@ -29,8 +45,8 @@ const MessageInput = ({ onSendMessage, userId, userName, groupId }) => {
   };
 
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={10}>
+    <Grid container spacing={1} alignItems="center">
+      <Grid item xs={8}>
         <TextField
           fullWidth
           variant="outlined"
@@ -41,7 +57,10 @@ const MessageInput = ({ onSendMessage, userId, userName, groupId }) => {
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={1}>
+        <FilePicker onFileSelected={handleFileSelected} />
+      </Grid>
+      <Grid item xs={3}>
         <IconButton onClick={() => handleSend()} color="success">
           <SendIcon />
         </IconButton>
