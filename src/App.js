@@ -7,6 +7,7 @@ import ShowInvitationsPage from "./pages/ShowInvitationsPage";
 import ChatDetailedPage from "./pages/ChatDetailedPage";
 import CreateNewGroupPage from "./pages/CreateNewGroupPage";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 const AuthRoute = ({ element, authenticated }) => {
   return authenticated ? element : <Navigate to="/" />;
@@ -19,6 +20,8 @@ const App = () => {
   let userData = {};
   if (cookie) {
     userData = JSON.parse(cookie);
+    axios.defaults.headers.common["Authorization"] = Cookies.get("token");
+    axios.defaults.headers.post["Content-Type"] = "application/json";
   }
 
   return (
