@@ -14,7 +14,7 @@ const FilePreview = ({ selectedFilePath, selectedFile, onClose }) => {
   ];
 
   return (
-    <Container>
+    <Container sx={{ marginTop: "1rem" }}>
       {selectedFilePath && (
         <Box>
           <Box sx={{ display: "flex" }}>

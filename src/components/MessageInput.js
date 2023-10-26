@@ -4,7 +4,6 @@ import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import content from "../assets/content.json";
 import FilePicker from "./FilePicker";
-import FilePreview from "./FilePreview";
 
 const MessageInput = ({
   onSendMessage,
@@ -25,7 +24,8 @@ const MessageInput = ({
   };
 
   const handleSend = async () => {
-    if (messageInfo.message.trim() !== "") {
+    const messageText = messageInfo?.message?.trim();
+    if (messageText !== "" && messageText !== undefined) {
       messageInfo.senderName = userName;
       messageInfo.senderId = userId;
       messageInfo.groupId = groupId;
