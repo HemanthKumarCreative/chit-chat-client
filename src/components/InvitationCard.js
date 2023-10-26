@@ -34,7 +34,7 @@ const InvitationCard = ({
 
   const updateGroupMembers = async () => {
     try {
-      const response = await axios.put(`${URL}/api/groups/g/${groupId}`, {
+      const response = await axios.put(`${URL}/api/groups/a/g/${groupId}`, {
         userId,
         role: "member",
       });

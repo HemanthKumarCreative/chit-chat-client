@@ -27,13 +27,34 @@ const UserListModal = ({
   groupId,
   senderId,
   setGroupInfo,
-  setGroups,
 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [users, setUsers] = useState([]);
   const { URL } = content;
   const [adminsInfo, setAdminsInfo] = useState([]);
   const [membersInfo, setMembersInfo] = useState([]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(`${URL}/api/users`);
+      if (response.statusText === "OK") {
+        const users = await response.data;
+        setUsers(users);
+        const adminsInfo = users?.filter(
+          (user) => admins?.includes(user.userId) === true
+        );
+        console.log({ adminsInfo });
+        setAdminsInfo(adminsInfo);
+        const membersInfo = users?.filter(
+          (user) => members?.includes(user.userId) === true
+        );
+        console.log({ membersInfo });
+        setMembersInfo(membersInfo);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchGroupInfo = async () => {
     if (groupId !== undefined) {
@@ -53,7 +74,37 @@ const UserListModal = ({
     setSelectedTab(tabIndex);
   };
 
-  const handleMakeAdmin = async (userId) => {};
+  const handleMakeAdmin = async (userId) => {
+    try {
+      const response = await axios.put(`${URL}/api/groups/a/g/${groupId}`, {
+        userId,
+        role: "admin",
+      });
+      if (response.statusText === "OK") {
+        const userAdminStatus = await response.data;
+        console.log(userAdminStatus);
+        await fetchGroupInfo();
+        await fetchUsers();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeUserGroups = async () => {
+    try {
+      const response = await axios.put(`${URL}/api/users/remove-user-groups`, {
+        userId: senderId,
+        groupId,
+      });
+      if (response?.statusText === "OK") {
+        const message = await response?.data?.message;
+        console.log({ message });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleRemoveUser = async (userId) => {
     try {
@@ -63,7 +114,9 @@ const UserListModal = ({
       if (response.statusText === "OK") {
         const userRemovedStatus = await response.data;
         console.log(userRemovedStatus);
+        await removeUserGroups();
         await fetchGroupInfo();
+        await fetchUsers();
       }
     } catch (error) {
       console.log(error);
@@ -80,7 +133,12 @@ const UserListModal = ({
     };
     try {
       const response = await axios.post(`${URL}/api/invitations`, invitation);
-      console.log({ response });
+      if (response.statusText === "Created") {
+        const userRemovedStatus = await response.data;
+        console.log(userRemovedStatus);
+        await fetchGroupInfo();
+        await fetchUsers();
+      }
     } catch (error) {
       console.log(error);
     }

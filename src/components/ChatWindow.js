@@ -11,6 +11,28 @@ import IconButton from "@mui/material/IconButton";
 import GroupsIcon from "@mui/icons-material/Groups";
 import UserListModal from "./Users";
 
+function getDateFromISOString(isoString) {
+  const dateObject = new Date(isoString);
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const day = String(dateObject.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function getTimeFromISOString(isoString) {
+  const dateObject = new Date(isoString);
+  let hours = dateObject.getHours();
+  const minutes = String(dateObject.getMinutes()).padStart(2, "0");
+  const seconds = String(dateObject.getSeconds()).padStart(2, "0");
+  const period = hours >= 12 ? "PM" : "AM";
+
+  // Convert to 12-hour format
+  hours = hours % 12 || 12; // Convert 0 to 12
+
+  return `${hours}:${minutes}:${seconds} ${period}`;
+}
+
 const ChatWindow = ({
   messages,
   userId,
@@ -76,7 +98,7 @@ const ChatWindow = ({
         </Box>
       </Box>
       <Box sx={{ overflowY: "auto", height: "65vh" }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {messages.map((messageInfo) => (
             <Grid item xs={12} key={messageInfo.messageId}>
               <Card
@@ -88,7 +110,33 @@ const ChatWindow = ({
                 }}
               >
                 <CardContent>
-                  <Typography variant="body1">{messageInfo.message}</Typography>
+                  {userId !== messageInfo.senderId && (
+                    <Typography
+                      variant="body1"
+                      color="error"
+                      sx={{ padding: 0 }}
+                    >
+                      {messageInfo.senderName}
+                    </Typography>
+                  )}
+                  <Typography variant="body3" sx={{ padding: 0 }}>
+                    {messageInfo.message}
+                  </Typography>
+                </CardContent>
+                <CardContent
+                  sx={{
+                    paddingTop: 0,
+                    textAlign: "right",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography variant="caption" sx={{ padding: 0 }}>
+                    {getDateFromISOString(messageInfo.updatedAt)}
+                  </Typography>
+                  <Typography variant="caption" sx={{ padding: 0 }}>
+                    {getTimeFromISOString(messageInfo.updatedAt)}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
