@@ -13,6 +13,7 @@ const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
   const [socket, setSocket] = useState(null);
   const [selectedFilePath, setSelectedFilePath] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
+  const [fileToUpload, setFileToUpload] = useState({});
 
   const handleSendMessage = (message) => {
     setMessages([...messages, message]);
@@ -102,6 +103,8 @@ const ChatScreen = ({ userId, groupId, userName, setGroups }) => {
             setSelectedFilePath={setSelectedFilePath}
             selectedFile={selectedFile}
             setSelectedFile={setSelectedFile}
+            setFileToUpload={setFileToUpload}
+            fileToUpload={fileToUpload}
           />
         </Grid>
       </Grid>

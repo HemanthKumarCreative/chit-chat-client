@@ -14,13 +14,31 @@ const MessageInput = ({
   selectedFilePath,
   setSelectedFile,
   selectedFile,
+  setFileToUpload,
+  fileToUpload,
 }) => {
   const [messageInfo, setMessageInfo] = useState({});
   const { URL } = content;
 
-  const handleFileSelected = (filePath, file) => {
+  const handleFileSelected = (filePath, file, fileToUpload) => {
     setSelectedFilePath(filePath);
     setSelectedFile(file);
+    setFileToUpload(fileToUpload);
+  };
+
+  const handleSendFile = async (fileToUpload) => {
+    const text = "Hello";
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("file", fileToUpload);
+    axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+
+    try {
+      const response = await axios.post(`${URL}/api/attachments`, formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSend = async () => {
@@ -29,18 +47,10 @@ const MessageInput = ({
       messageInfo.senderName = userName;
       messageInfo.senderId = userId;
       messageInfo.groupId = groupId;
-      try {
-        const response = await axios.post(`${URL}/api/messages/${groupId}`, {
-          ...messageInfo,
-        });
-        if (response.statusText === "Created") {
-          const messageSent = await response.data;
-          onSendMessage(messageSent);
-          setMessageInfo({ message: "", senderName: "" });
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    }
+
+    if (selectedFilePath) {
+      handleSendFile(fileToUpload);
     }
   };
 

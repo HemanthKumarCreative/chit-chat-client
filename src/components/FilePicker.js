@@ -7,7 +7,8 @@ const FilePicker = ({ onFileSelected }) => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     const filePath = URL.createObjectURL(selectedFile);
-    onFileSelected(filePath, selectedFile.name);
+    onFileSelected(filePath, selectedFile.name, selectedFile);
+    console.log(selectedFile);
   };
 
   return (
