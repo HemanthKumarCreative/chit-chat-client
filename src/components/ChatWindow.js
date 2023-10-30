@@ -55,6 +55,7 @@ const ChatWindow = ({
     setOpenModal(false);
   };
 
+  console.log({ messages });
   return (
     <Container sx={{ marginTop: 1 }}>
       <Box
@@ -126,6 +127,25 @@ const ChatWindow = ({
                   <Typography variant="body3" sx={{ padding: 0 }}>
                     {messageInfo.message}
                   </Typography>
+                  <Box>
+                    {messageInfo?.attachmentUrl &&
+                      (messageInfo?.attachmentType?.includes(".jpg") ||
+                      messageInfo?.attachmentType?.includes(".png") ? (
+                        <img
+                          src={messageInfo?.attachmentUrl}
+                          alt="Attachment"
+                          style={{ maxWidth: "100%", marginTop: "1rem" }}
+                        />
+                      ) : (
+                        <a
+                          href={messageInfo.attachmentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View Attachment
+                        </a>
+                      ))}
+                  </Box>
                 </CardContent>
                 <CardContent
                   sx={{
