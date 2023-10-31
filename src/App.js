@@ -8,6 +8,8 @@ import ChatDetailedPage from "./pages/ChatDetailedPage";
 import CreateNewGroupPage from "./pages/CreateNewGroupPage";
 import Cookies from "js-cookie";
 import axios from "axios";
+import ForgetPasswordPage from "./pages/ForgetPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const AuthRoute = ({ element, authenticated }) => {
   return authenticated ? element : <Navigate to="/" />;
@@ -96,6 +98,8 @@ const App = () => {
             />
           }
         />
+        <Route path="/forget-password" element={<ForgetPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
