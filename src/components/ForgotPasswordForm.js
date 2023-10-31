@@ -32,9 +32,6 @@ const ForgotPasswordForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" align="center" gutterBottom>
-        Forgot Password
-      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
