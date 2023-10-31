@@ -42,9 +42,6 @@ export default function HomePage({ groups, setGroups, userId, userName }) {
           <Box sx={{ overflowY: "auto", height: "70vh" }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <BannerCard message={messages.encryptNote} />
-              </Grid>
-              <Grid item xs={12}>
                 <BannerCard message={messages.detailedGroup} />
               </Grid>
             </Grid>
